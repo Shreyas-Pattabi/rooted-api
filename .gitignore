@@ -1,0 +1,48 @@
+# Python-related
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+env/
+*.env
+*.venv
+dump.rdb
+
+# FastAPI & Uvicorn logs
+*.log
+logs/
+*.sqlite3
+
+# Virtual environments
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Ignore IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore OS-generated files
+.DS_Store
+Thumbs.db
+
+# Ignore compiled/migrated files
+migrations/
+alembic/
+
+# Ignore database files
+*.db
+*.sqlite
+*.sqlite3
+db.sqlite3
+
+# Ignore containerization files
+docker-compose.override.yml
+
+# Ignore uploads & temporary files
+media/
+uploads/
+tmp/
