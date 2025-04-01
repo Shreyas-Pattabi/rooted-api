@@ -5,8 +5,6 @@ __pycache__/
 *.pyd
 .Python
 .venv/
-env/
-*.env
 *.venv
 dump.rdb
 
