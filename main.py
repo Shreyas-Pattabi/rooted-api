@@ -22,7 +22,7 @@ app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Adjust to match your frontend URL
+    allow_origins=["*"],  # Adjust to match your frontend URL
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods (POST, GET, OPTIONS, etc.)
     allow_headers=["*"],  # Allow all headers
