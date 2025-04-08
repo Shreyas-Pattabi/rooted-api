@@ -28,12 +28,7 @@ async def login(user_data: UserLogin, db: AsyncSession = Depends(get_db)):
     access_token = create_access_token({"sub": str(user.id)})
 
     response = JSONResponse(content={"access_token": access_token, 
-                                     "token_type": "bearer", 
-                                     "user" : {"first_name": user.first_name, 
-                                                "last_name": user.last_name, 
-                                                "email": user.email, 
-                                                "profile_picture": user.profile_picture,
-                                                "created_at": user.created_at}})
+                                     "token_type": "bearer"})
     return response
 
 @router.get("/verify")
