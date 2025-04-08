@@ -33,7 +33,7 @@ async def login(user_data: UserLogin, db: AsyncSession = Depends(get_db)):
                                                 "last_name": user.last_name, 
                                                 "email": user.email, 
                                                 "profile_picture": user.profile_picture,
-                                                "created_at": user.created_at.strftime("%B %Y")}})
+                                                "created_at": user.created_at}})
     return response
 
 @router.get("/verify")
