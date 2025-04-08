@@ -12,8 +12,8 @@ class User(Base):
     # Administrative fields
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     is_admin = Column(Boolean, default=False)
-    created_at = Column(DateTime, nullable=False, server_default=func.now())
-    updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
 
     # User Fields
     first_name = Column(String, nullable=False)
@@ -49,12 +49,12 @@ class Plant(Base):
 
     image = Column(String, nullable=True)  # URL or path to image
 
-    last_watered = Column(DateTime, nullable=True, server_default=func.now())
-    last_fertilized = Column(DateTime, nullable=True, server_default=func.now())
-    last_repotted = Column(DateTime, nullable=True, server_default=func.now())
+    last_watered = Column(DateTime(timezone=True), nullable=True, server_default=func.now())
+    last_fertilized = Column(DateTime(timezone=True), nullable=True, server_default=func.now())
+    last_repotted = Column(DateTime(timezone=True), nullable=True, server_default=func.now())
     
-    created_at = Column(DateTime, nullable=False, server_default=func.now())
-    updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
+    created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
 
     # Foreign key to link plants to a user
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)

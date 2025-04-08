@@ -52,7 +52,7 @@ async def update_plant(plant_id: int, plant_data: PlantUpdate, db: AsyncSession 
     utc_offset = timedelta(hours=-5)
     if plant_data.moisture is not None and plant.moisture is not None:
         if plant_data.moisture > plant.moisture:
-            plant.last_watered = (datetime.now(timezone.utc) + utc_offset).replace(tzinfo=None)
+            plant.last_watered = (datetime.now(timezone.utc))
     
     for key, value in plant_data.dict(exclude_unset=True).items():
         setattr(plant, key, value)
