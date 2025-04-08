@@ -7,6 +7,8 @@ from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
 from sqlalchemy.sql import text
 
 from util.database import Base, engine, get_db
+from simulation import simulate_plant_updates
+import asyncio
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -25,6 +27,10 @@ app.add_middleware(
     allow_methods=["*"],  # Allow all HTTP methods (POST, GET, OPTIONS, etc.)
     allow_headers=["*"],  # Allow all headers
 )
+
+@app.on_event("startup")
+async def start_sim():
+    asyncio.create_task(simulate_plant_updates())
 
 from routes import auth, user, plant
 
