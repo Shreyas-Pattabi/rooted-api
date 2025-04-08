@@ -26,33 +26,16 @@ async def login(user_data: UserLogin, db: AsyncSession = Depends(get_db)):
         )
     
     access_token = create_access_token({"sub": str(user.id)})
-    # refresh_token = await create_refresh_token(str(user.id))
 
-    response = JSONResponse(content={"access_token": access_token, "token_type": "bearer"})
-    # response.set_cookie(key="refresh_token", value=refresh_token, httponly=True, samesite="Lax", secure=True)
+    response = JSONResponse(content={"access_token": access_token, 
+                                     "token_type": "bearer", 
+                                     "user" : {"first_name": user.first_name, 
+                                                "last_name": user.last_name, 
+                                                "email": user.email, 
+                                                "profile_picture": user.profile_picture,
+                                                "created_at": user.created_at.strftime("%B %Y")}})
     return response
 
 @router.get("/verify")
 def verify_token(current_user: User = Depends(get_current_user)):
     return {"message": "Token is valid"}
-
-# @router.post("/refresh")
-# async def refresh_access_token(request: Request):
-#     refresh_token = request.cookies.get("refresh_token")
-#     if not refresh_token:
-#         raise HTTPException(status_code=401, detail="Refresh token missing")
-
-#     user_id = get_user_id_from_refresh_token(refresh_token)  # Extract user ID
-#     if not await verify_refresh_token(user_id, refresh_token):
-#         raise HTTPException(status_code=401, detail="Invalid refresh token")
-
-#     new_access_token = create_access_token({"sub": user_id})
-#     return {"access_token": new_access_token, "token_type": "bearer"}
-
-# @router.post("/logout")
-# async def logout(current_user: User = Depends(get_current_user)):
-#     user_id = current_user.id
-#     await revoke_refresh_token(user_id)
-#     response = JSONResponse(content={"message": "Logged out successfully"})
-#     response.delete_cookie("refresh_token")
-#     return response
