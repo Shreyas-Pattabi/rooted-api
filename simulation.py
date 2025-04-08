@@ -66,7 +66,7 @@ async def simulate_plant_updates():
                 
                 await asyncio.gather(*tasks)
 
-            await asyncio.sleep(10)
+            await asyncio.sleep(60)
 
 if __name__ == "__main__":
     asyncio.run(simulate_plant_updates())
