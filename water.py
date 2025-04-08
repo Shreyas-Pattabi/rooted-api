@@ -28,7 +28,7 @@ def calculate_new_values(plant):
 
     # Simulate watering plant
     new_moisture = random.uniform(95.0, 100.0)
-    updated_fields["water"] = round(new_moisture, 2)
+    updated_fields["moisture"] = max(plant["moisture"], round(new_moisture, 2))
 
     return updated_fields
 

@@ -38,13 +38,21 @@ class Plant(Base):
     __tablename__ = "plants"
 
     id = Column(Integer, primary_key=True, index=True)
+
     name = Column(String, nullable=False)
     type = Column(String, nullable=True)
-    water = Column(Float, nullable=True)
+    
+    moisture = Column(Float, nullable=True)
     temperature = Column(Float, nullable=True)
     humidity = Column(Float, nullable=True)
+    sunlight = Column(Float, nullable=True)
+
     image = Column(String, nullable=True)  # URL or path to image
-    last_watered = Column(DateTime, nullable=True, default=None)
+
+    last_watered = Column(DateTime, nullable=True, server_default=func.now())
+    last_fertilized = Column(DateTime, nullable=True, server_default=func.now())
+    last_repotted = Column(DateTime, nullable=True, server_default=func.now())
+    
     created_at = Column(DateTime, nullable=False, server_default=func.now())
     updated_at = Column(DateTime, nullable=False, server_default=func.now(), onupdate=func.now())
 

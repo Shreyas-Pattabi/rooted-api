@@ -27,16 +27,27 @@ def calculate_new_values(plant):
     updated_fields = {}
 
     # Simulate moisture loss over time
-    new_moisture = max(0.0, plant["water"] - random.uniform(0.1, 0.5))  
-    updated_fields["water"] = round(new_moisture, 2)
+    if not plant["moisture"] :
+        updated_fields["moisture"] = round(random.uniform(70.0, 100.0), 2)
+    else :
+        updated_fields["moisture"] = round(max(0.0, plant["moisture"] - random.uniform(0.1, 0.5)), 2)
 
     # Simulate realistic temperature fluctuations
-    temp_variation = random.uniform(-0.5, 0.5)
-    updated_fields["temperature"] = round(plant["temperature"] + temp_variation, 2)
+    if not plant["temperature"] :
+        updated_fields["temperature"] = round(random.uniform(18.0, 28.0), 2)
+    else :
+        updated_fields["temperature"] = round(plant["temperature"] + random.uniform(-0.5, 0.5), 2)
 
     # Simulate humidity changes
-    humidity_variation = random.uniform(-1.0, 1.0)
-    updated_fields["humidity"] = round(max(0.0, min(100.0, plant["humidity"] + humidity_variation)), 2)
+    if not plant["humidity"] :
+        updated_fields["humidity"] = round(random.uniform(40.0, 60.0), 2)
+    else :
+        updated_fields["humidity"] = round(max(0.0, min(100.0, plant["humidity"] + random.uniform(-1.0, 1.0))), 2)
+
+    if not plant["sunlight"] :
+        updated_fields["sunlight"] = round(random.uniform(50.0, 70.0), 2)
+    else :
+        updated_fields["sunlight"] = round(max(0.0, min(100.0, plant["sunlight"] + random.uniform(-1.0, 1.0))), 2)
 
     return updated_fields
 

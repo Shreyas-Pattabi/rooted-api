@@ -8,7 +8,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from models import User
 from schemas import UserLogin
 from util.auth import (create_access_token, 
-                       get_user_by_identifier)
+                       get_user_by_identifier,
+                       get_current_user)
 from util.database import get_db
 
 router = APIRouter()
@@ -30,6 +31,10 @@ async def login(user_data: UserLogin, db: AsyncSession = Depends(get_db)):
     response = JSONResponse(content={"access_token": access_token, "token_type": "bearer"})
     # response.set_cookie(key="refresh_token", value=refresh_token, httponly=True, samesite="Lax", secure=True)
     return response
+
+@router.get("/verify")
+def verify_token(current_user: User = Depends(get_current_user)):
+    return {"message": "Token is valid"}
 
 # @router.post("/refresh")
 # async def refresh_access_token(request: Request):

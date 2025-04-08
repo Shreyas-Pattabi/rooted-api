@@ -10,7 +10,7 @@ from util.database import get_db
 
 router = APIRouter()
 
-@router.post("/", response_model=UserResponse)
+@router.post("/register", response_model=UserResponse)
 async def register_user(user: UserCreate, db: AsyncSession = Depends(get_db)):
     try:
         if not user.email and not user.phone_number:

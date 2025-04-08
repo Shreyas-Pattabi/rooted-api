@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-
+from sqlalchemy import or_
 from typing import List
 from models import User, Plant
 from schemas import PlantBase, PlantResponse, PlantUpdate
@@ -50,8 +50,8 @@ async def update_plant(plant_id: int, plant_data: PlantUpdate, db: AsyncSession 
     
 
     utc_offset = timedelta(hours=-5)
-    if plant_data.water is not None and plant.water is not None:
-        if plant_data.water > plant.water:
+    if plant_data.moisture is not None and plant.moisture is not None:
+        if plant_data.moisture > plant.moisture:
             plant.last_watered = (datetime.now(timezone.utc) + utc_offset).replace(tzinfo=None)
     
     for key, value in plant_data.dict(exclude_unset=True).items():
@@ -60,3 +60,19 @@ async def update_plant(plant_id: int, plant_data: PlantUpdate, db: AsyncSession 
     await db.commit()
     await db.refresh(plant)
     return plant
+
+@router.delete("/{plant_id}")
+async def delete_plant(plant_id: int, session: AsyncSession = Depends(get_db), current_user=Depends(get_current_user)):
+    # Get the plant from DB
+    result = await session.execute(
+        select(Plant).where(Plant.id == plant_id, Plant.user_id == current_user.id)
+    )
+    plant = result.scalars().first()
+
+    if not plant:
+        raise HTTPException(status_code=404, detail="Plant not found")
+
+    await session.delete(plant)
+    await session.commit()
+
+    return

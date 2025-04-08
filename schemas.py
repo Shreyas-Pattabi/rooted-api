@@ -41,14 +41,14 @@ class UserLogin(BaseModel):
     identifier: Identifier  # Can be email or phone number
     password: Password
 
-
 # Plant Schemas
 class PlantBase(BaseModel):
     name: str
     type: Optional[str] = None
-    water: Optional[float] = None
+    moisture: Optional[float] = None
     temperature: Optional[float] = None
     humidity: Optional[float] = None
+    sunlight: Optional[float] = None
     image: Optional[str] = None 
     
 class PlantUpdate(PlantBase):
@@ -59,7 +59,10 @@ class PlantResponse(PlantBase):
     user_id: UUID
     created_at: datetime
     updated_at: datetime
-    last_watered: Optional[datetime] = None
+
+    last_watered: datetime
+    last_fertilized: datetime
+    last_repotted: datetime
 
     class Config:
         from_attributes = True
