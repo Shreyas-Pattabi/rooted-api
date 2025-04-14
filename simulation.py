@@ -1,6 +1,5 @@
 import asyncio
 import aiohttp
-from datetime import datetime, timezone, timedelta
 import random
 
 API_BASE_URL = "https://rooted-api-production.up.railway.app/plants"  # Change this if running elsewhere
@@ -66,7 +65,7 @@ async def simulate_plant_updates():
                 
                 await asyncio.gather(*tasks)
 
-            await asyncio.sleep(60)
+            await asyncio.sleep(5)
 
 if __name__ == "__main__":
     asyncio.run(simulate_plant_updates())

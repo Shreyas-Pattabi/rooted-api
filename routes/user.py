@@ -1,8 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 import asyncio
-
 from models import User
 from schemas import UserBase, UserCreate, UserResponse, UserUpdate
 from util.auth import get_current_user, get_user_by_identifier, hash_password
