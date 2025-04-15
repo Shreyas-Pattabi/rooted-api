@@ -17,7 +17,7 @@ async def lifespan(app: FastAPI):
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)  # Create tables async
     
-    # task = asyncio.create_task(simulate_plant_updates())
+    task = asyncio.create_task(simulate_plant_updates())
 
     yield  # Application startup happens here
     await engine.dispose()  # Cleanup when app shuts down
@@ -44,7 +44,6 @@ from routes import auth, user, plant, upload
 @app.get("/")
 async def health_check(db: AsyncSession = Depends(get_db)):
     try:
-        # Run a simple query to check DB connection
         result = await db.execute(text("SELECT 1"))
         return {"message": "API is running", "database": "Connected"}
     except Exception as e:
